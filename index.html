@@ -1,35 +1,106 @@
 <!DOCTYPE html>
-<html lang="zh">
+<html lang="zh-cn">
+
 <head>
   <meta charset="UTF-8">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>chaoszhu's Github Blog</title>
+  <title>Document</title>
   <style>
     body {
+      user-select: none;
+      background: #0d1320;
       height: 100vh;
+      width: 100vw;
+      overflow: hidden;
       display: flex;
+      flex-direction: column;
       justify-content: center;
       align-items: center;
     }
+
+    #date {
+      margin-top: 0px;
+      text-align: center;
+      font-size: 8vw;
+      line-height: 8vw;
+      margin-bottom: 5vw;
+      font-weight: bold;
+      color: #e2ecfd;
+    }
+
+    #timer {
+      text-align: center;
+      font-size: 15vw;
+      line-height: 15vw;
+      font-weight: bold;
+      color: #e2ecfd;
+    }
   </style>
 </head>
+
 <body>
-  <h1 style="margin-top: -300px;">
-    <p>Blog已迁移至国内服务器</p>
-    <i id="second">8</i> s后重定向至：
-    <span style="color: rgb(29, 218, 218);">
-      https://zhulijun.club
-    </span>
-  </h1>
+  <div id="date">03月18日</div>
+  <div id="timer">05:47</div>
+
   <script>
-    let time = 8
+    function toggleFullScreen() {
+      if (!document.fullscreenElement) {
+        document.documentElement.requestFullscreen();
+      } else {
+        if (document.exitFullscreen) {
+          document.exitFullscreen();
+        }
+      }
+    }
+    document.addEventListener("click", function (e) {
+      toggleFullScreen()
+    })
+
+    let showSymbl = true
+
+    function clock() {
+      let now = new Date()
+      let hour = now.getHours() + ''
+      let minute = now.getMinutes() + ''
+      let second = now.getSeconds() + ''
+      let month = (now.getMonth() + 1) + ''
+      let day = now.getDate() + ''
+      // console.log(now.getDate(), now.getDay())
+      let weeks = '日一二三四五六'.split('')
+      let week = weeks[now.getDay()]
+
+
+      let span = `<span style="margin: 0 2vw;">:</span>`
+      document.getElementById('timer').innerHTML =
+        `${hour.padStart(2,'0')}${span}${minute.padStart(2,'0')}${span}${second.padStart(2,'0')}`
+
+      // if (showSymbl) {
+      //   document.getElementById('timer').innerHTML = `${hour.padStart(2,'0')}<span>:</span>${minute.padStart(2,'0')}`
+      // } else {
+      //   document.getElementById('timer').innerHTML =
+      //     `${hour.padStart(2,'0')}<span style="color:#0d1320">:</span>${minute.padStart(2,'0')}`
+      // }
+      document.getElementById('date').innerHTML = `${month.padStart(2,'0')}-${day.padStart(2,'0')} 周${week}`
+
+      showSymbl = !showSymbl
+    }
+    clock()
     setInterval(() => {
-      document.getElementById('second').innerText = --time
+      clock()
     }, 1000)
-    setTimeout(() => {
-      location.href = 'https://zhulijun.club'
-    }, 5000)
   </script>
+
+
+  <script>
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?a8baaf55cb517a031547310e64e9ff39";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+
 </body>
+
 </html>
